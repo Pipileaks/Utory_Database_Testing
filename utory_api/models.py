@@ -283,3 +283,14 @@ class Stories(models.Model):
         managed = False
         db_table = 'Stories'
         verbose_name_plural = 'Stories'
+
+class Deneme(models.Model):
+    uuid = models.CharField(max_length=64, blank=True, null=True)
+    roleid = models.IntegerField(db_column='roleId', blank=True, null=True)  # Field name made lowercase.
+    published = models.BooleanField(blank=True, null=True, default=False)
+    approved = models.BooleanField(blank=True, null=True, default=False)
+    review = models.BooleanField(blank=True, null=True, default=False)
+    seen = models.BooleanField(blank=True, null=True, default=False)
+    resuming = models.BooleanField(blank=True, null=True, default=False)
+    trash = models.BooleanField(blank=True, null=True, default=False)
+    title = models.CharField(max_length=64)

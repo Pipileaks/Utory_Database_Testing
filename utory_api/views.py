@@ -132,7 +132,7 @@ class DenemeAPI(generics.ListCreateAPIView):
                                        ' where s.userid = %s and s.title = %s ', [userid2, title2]
                                        )
         print(userid2, title2, 'Gelirken2')
-        return userid2, title2
+
 
 
 

@@ -91,8 +91,8 @@ class HighestRatedStorySerializer(serializers.ModelSerializer):
 
 class DenemeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stories
-        fields = ['uuid']
+        model = Deneme
+        fields = ['uuid', 'published']
 
 
 
