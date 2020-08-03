@@ -92,7 +92,7 @@ class HighestRatedStorySerializer(serializers.ModelSerializer):
 class MyStoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyStories
-        fields = ['uuid', 'published', 'title']
+        fields = ['uuid', 'published', 'title', 'approved', 'trash']
 
 
 

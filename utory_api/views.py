@@ -66,6 +66,7 @@ class UseridAPI(generics.ListCreateAPIView):
     search_fields = ['=uuid']
     filter_backends = (filters.SearchFilter,)
 
+
 class RecentlyStoryAPI(generics.ListCreateAPIView):
     serializer_class = RecentlyStorySerializer
     def get_queryset(self):
@@ -120,12 +121,11 @@ class MyStoriesAPI(generics.ListCreateAPIView):
     serializer_class = MyStoriesSerializer
     def get_queryset(self):
         userid = self.request.query_params.get('userid', None)
-        title = self.request.query_params.get('title', None)
-        return Stories.objects.raw(' select s.id, s.title, ss.published '
+        return Stories.objects.raw(' select s.id, s.title, ss.published, ss.trash, ss.approved '
                                        ' from Stories s '
                                        ' left join Users u on u.uuid = s.userId '
                                        ' left join story_status ss on s.uuid = ss.uuid '
-                                       ' where s.userid = %s and s.title = %s ', [userid, title]
+                                       ' where s.userid = %s ', [userid]
                                        )
 
 

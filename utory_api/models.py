@@ -241,12 +241,12 @@ class StoryHistory(models.Model):
 class StoryStatus(models.Model):
     uuid = models.CharField(max_length=64, blank=True, null=True)
     roleid = models.IntegerField(db_column='roleId', blank=True, null=True)  # Field name made lowercase.
-    published = models.BooleanField(blank=True, null=True, default=False)
-    approved = models.BooleanField(blank=True, null=True, default=False)
+    published = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
     review = models.BooleanField(blank=True, null=True, default=False)
     seen = models.BooleanField(blank=True, null=True, default=False)
     resuming = models.BooleanField(blank=True, null=True, default=False)
-    trash = models.BooleanField(blank=True, null=True, default=False)
+    trash = models.BooleanField(default=False)
 
     class Meta:
         managed = False
@@ -287,10 +287,10 @@ class Stories(models.Model):
 class MyStories(models.Model):
     uuid = models.CharField(max_length=64, blank=True, null=True)
     roleid = models.IntegerField(db_column='roleId', blank=True, null=True)  # Field name made lowercase.
-    published = models.BooleanField(blank=True, null=True, default=False)
-    approved = models.BooleanField(blank=True, null=True, default=False)
-    review = models.BooleanField(blank=True, null=True, default=False)
-    seen = models.BooleanField(blank=True, null=True, default=False)
-    resuming = models.BooleanField(blank=True, null=True, default=False)
-    trash = models.BooleanField(blank=True, null=True, default=False)
+    published = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
+    review = models.BooleanField(default=False)
+    seen = models.BooleanField(default=False)
+    resuming = models.BooleanField(default=False)
+    trash = models.BooleanField(default=False)
     title = models.CharField(max_length=64)
