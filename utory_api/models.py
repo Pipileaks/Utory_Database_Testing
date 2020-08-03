@@ -284,7 +284,7 @@ class Stories(models.Model):
         db_table = 'Stories'
         verbose_name_plural = 'Stories'
 
-class Deneme(models.Model):
+class MyStories(models.Model):
     uuid = models.CharField(max_length=64, blank=True, null=True)
     roleid = models.IntegerField(db_column='roleId', blank=True, null=True)  # Field name made lowercase.
     published = models.BooleanField(blank=True, null=True, default=False)

@@ -89,10 +89,10 @@ class HighestRatedStorySerializer(serializers.ModelSerializer):
         fields = ['uuid', 'title', 'username', 'rating', 'playcount']
 
 
-class DenemeSerializer(serializers.ModelSerializer):
+class MyStoriesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Deneme
-        fields = ['uuid', 'published']
+        model = MyStories
+        fields = ['uuid', 'published', 'title']
 
 
 
