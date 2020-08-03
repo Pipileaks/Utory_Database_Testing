@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets, filters, generics
 from .serializers import *
-
+userid2 = ''
+title2 = ''
 
 class AchivementsAPI(viewsets.ModelViewSet):
     serializer_class = AchivementsSerializer
@@ -110,6 +111,29 @@ class HighestRatedPlayedStoryAPI(generics.ListCreateAPIView):
                                     ' group by ps.uuid, s.id ) total on s.uuid = total.uuid '
                                     ' order by rating desc '
                                     ' LIMIT 100 ')
+
+
+
+class DenemeAPI(generics.ListCreateAPIView):
+    serializer_class = DenemeSerializer
+    def get_queryset(self):
+        userid = self.request.query_params.get('userid', None)
+        title = self.request.query_params.get('title', None)
+        print(userid, title, 'Giderken')
+        userid2 = userid
+        title2 = title
+        print(userid2, title2, 'Giderken2')
+
+        print(userid2, title2, 'Gelirken')
+        return Stories.objects.raw(' select s.id, s.title, ss.published '
+                                       ' from Stories s '
+                                       ' left join Users u on u.uuid = s.userId '
+                                       ' left join story_status ss on s.uuid = ss.uuid '
+                                       ' where s.userid = %s and s.title = %s ', [userid2, title2]
+                                       )
+        print(userid2, title2, 'Gelirken2')
+        return userid2, title2
+
 
 
 
