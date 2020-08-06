@@ -44,4 +44,5 @@ urlpatterns = [
     path('mostplayedstories/', views.MostPlayedStoryAPI.as_view()),
     path('highestratedstories/', views.HighestRatedPlayedStoryAPI.as_view()),
     path('mystories/', views.MyStoriesAPI.as_view()),
+    path('search/', views.SearchAPI.as_view()),
 ]

@@ -294,3 +294,7 @@ class MyStories(models.Model):
     resuming = models.BooleanField(default=False)
     trash = models.BooleanField(default=False)
     title = models.CharField(max_length=64)
+    playcount = models.IntegerField(db_column='playCount', default=0)
+    rating = models.FloatField(default=0.0)
+    username = models.CharField(max_length=32, blank=True, null=True)
+

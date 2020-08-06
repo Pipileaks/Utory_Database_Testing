@@ -121,15 +121,29 @@ class MyStoriesAPI(generics.ListCreateAPIView):
     serializer_class = MyStoriesSerializer
     def get_queryset(self):
         userid = self.request.query_params.get('userid', None)
-        return Stories.objects.raw(' select s.id, s.title, ss.published, ss.trash, ss.approved '
-                                       ' from Stories s '
-                                       ' left join Users u on u.uuid = s.userId '
-                                       ' left join story_status ss on s.uuid = ss.uuid '
-                                       ' where s.userid = %s ', [userid]
-                                       )
+        return Stories.objects.raw( ' select u.uuid, avg(if(ps.rating is null , 0, ps.rating))rating, count(if(ps.rating is null, NULL, 1)) playcount, s.id, s.title, ss.published, ss.trash, ss.approved '
+                                    ' from Stories s '
+                                    ' left join Users u on u.uuid = s.userId '
+                                    ' left join story_status ss on s.uuid = ss.uuid '
+                                    ' left join played_story ps on ps.uuid = s.uuid '
+                                    ' where s.userid = %s '
+                                    ' group by  s.id, u.uuid, s.title, ss.published, ss.trash, ss.approved ',
+                                     [userid]
+                                     )
 
 
-
+class SearchAPI(generics.ListCreateAPIView):
+    serializer_class = SearchSerializer
+    def get_queryset(self):
+        search = self.request.query_params.get('s', None)
+        return Stories.objects.raw(   " select avg(if(ps.rating is null , 0, ps.rating))rating, count(if(ps.rating is null, NULL, 1)) playcount, s.title, s.username  "
+                                     " from Stories s "
+                                     " left join played_story ps on s.uuid = ps.uuid "
+                                     " left join story_status ss on s.uuid = ss.uuid "
+                                     " where s.title like  concat('%', {}, '%').format(search) or s.username like concat('%', {}, '%').format(search)  and ss.published = true "
+                                     " group by s.title, s.username ",
+                                     [search, search]
+                                     )
 
 
 
