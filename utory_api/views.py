@@ -136,13 +136,12 @@ class SearchAPI(generics.ListCreateAPIView):
     serializer_class = SearchSerializer
     def get_queryset(self):
         search = self.request.query_params.get('s', None)
-        return Stories.objects.raw(   " select avg(if(ps.rating is null , 0, ps.rating))rating, count(if(ps.rating is null, NULL, 1)) playcount, s.title, s.username  "
+        return Stories.objects.raw(   " select s.id, avg(if(ps.rating is null , 0, ps.rating))rating, count(if(ps.rating is null, NULL, 1)) playcount, s.title, s.username  "
                                      " from Stories s "
                                      " left join played_story ps on s.uuid = ps.uuid "
                                      " left join story_status ss on s.uuid = ss.uuid "
-                                     " where s.title like  concat('%', {}, '%').format(search) or s.username like concat('%', {}, '%').format(search)  and ss.published = true "
-                                     " group by s.title, s.username ",
-                                     [search, search]
+                                     " where (s.title like '{}' or s.username like '{}')  and ss.published = true "
+                                     " group by s.title, s.username, s.id " .format('%%' + search + '%%', '%%' + search + '%%')
                                      )
 
 
